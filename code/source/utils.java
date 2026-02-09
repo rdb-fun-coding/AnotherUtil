@@ -97,7 +97,10 @@ public final class utils
 		IData logPipeline = IDataFactory.create();
 		ValuesEmulator.put(logPipeline, "connectorID", "DUMMY_CONN_ID");
 		ValuesEmulator.put(logPipeline, "severityLevel", Level.INFO);
+		ValuesEmulator.put(logPipeline, "message", "getSecret2 called : " + inHandle);
+		
 		try {
+			Service.doInvoke(serviceNsName, logPipeline); 
 			WmSecureString retrievePassword = OutboundPasswordManager.retrievePassword(pkgName, inHandle);
 			if(retrievePassword == null) {
 				System.out.println("Got no result with pacakge as : " + pkgName);
@@ -114,8 +117,31 @@ public final class utils
 		}
 		catch (PasswordManagerException e) {
 			e.printStackTrace();
+			ValuesEmulator.put(logPipeline, "message", "Got PasswordManagerException for handle: " + inHandle);
+			ValuesEmulator.put(logPipeline, "message", "Got PasswordManagerException:  "+ e.getLocalizedMessage()+ "for handle: " + inHandle);
+			try {
+				Service.doInvoke(serviceNsName, logPipeline);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
+			ValuesEmulator.put(logPipeline, "message", "Got Exception for handle: " + inHandle);
+			ValuesEmulator.put(logPipeline, "message", "Got Exception:  "+ e.getLocalizedMessage()+ "for handle: " + inHandle);
+			try {
+				Service.doInvoke(serviceNsName, logPipeline);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			} 
+		}catch (Throwable t){
+			t.printStackTrace();
+			ValuesEmulator.put(logPipeline, "message", "Got Throwable error for handle: " + inHandle);
+			ValuesEmulator.put(logPipeline, "message", "Got Throwable error" + t.getLocalizedMessage() +" for handle: " + inHandle);
+			try {
+				Service.doInvoke(serviceNsName, logPipeline);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			} 
 		}
 		// --- <<IS-END>> ---
 
