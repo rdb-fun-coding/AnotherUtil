@@ -12,8 +12,10 @@
   <array name="implements" type="value" depth="1">
   </array>
   <array name="imports" type="value" depth="1">
+    <value>com.wm.lang.ns.NSName</value>
     <value>com.wm.passman.PasswordManagerException</value>
     <value>com.wm.util.security.WmSecureString</value>
+    <value>java.util.logging.Level</value>
     <value>com.wm.app.b2b.server.OutboundPasswordManager</value>
   </array>
 </Values>
